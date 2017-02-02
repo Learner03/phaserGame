@@ -1,0 +1,565 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Phaser - Making your first game, part 1</title>
+	<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/8CB3DA09-D431-E541-9ED3-DACEBA92BFF8/main.js" charset="UTF-8"></script><script type="text/javascript" src="phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update});
+
+var text;
+var button;
+var count= 0, score= 0;
+var a,b,c;
+var timer, timeDisp;
+var sec= 30;
+var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
+function preload() {
+
+    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    game.scale.pageAlignHorizontally = true;
+    game.scale.pageAlignVertically = true;
+	
+	game.load.image('background', 'assets/background.png');
+	game.load.image('tileback', 'assets/tileback.png');
+	game.load.spritesheet('sp1', 'assets/sprite1.png', 32, 32);//loading spritesheet
+	game.load.spritesheet('sp2', 'assets/sprite2.png', 32, 32);
+	game.load.spritesheet('sp3', 'assets/sprite3.png', 32, 32);
+	game.load.spritesheet('sp4', 'assets/sprite4.png', 32, 32);
+	game.load.text('level', 'assets/gameLevels.json');
+}
+
+function timer(){
+	timer = game.time.create(false);              //game.time.events.add(Phaser.Timer.SECOND * 100, stopTimer, this);
+    timer.loop(1000, updateCounter, this);        //Set a TimerEvent to occur after each second
+	timer.start();
+}
+
+function updateCounter(){
+    if(sec== 0){
+	    alert("Time's up!!!");
+		location.reload(this);
+	}
+	else{
+	sec--;
+    timerDisp.text= "Time left: " + sec;
+	}
+}
+
+function shuffle(array) {                             //The de-facto unbiased shuffle algorithm is the Fisher-Yates 
+    var currentIndex= array.length;                   //(aka Knuth) Shuffle to shuffle elements of an array.
+    var	temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+		}
+	return array;
+}
+
+function create() {
+	
+	game.add.sprite(0, 0, 'background');
+	game.add.sprite(145, 145, 'tileback');
+	
+    timer();
+	arr= shuffle(arr);
+	console.log(arr);
+	
+	//block 1
+	if((arr[0]==0) || (arr[0]==1) || (arr[0]==2) || (arr[0]==3)){
+	    button = game.add.button(200, 200, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[0]==4) || (arr[0]==5) || (arr[0]==6) || (arr[0]==7)){
+		button = game.add.button(200, 200, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[0]==8) || (arr[0]==9) || (arr[0]==10) || (arr[0]==11)){
+		button = game.add.button(200, 200, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(200, 200, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 2
+	if((arr[1]==0) || (arr[1]==1) || (arr[1]==2) || (arr[1]==3)){
+	    button = game.add.button(200, 300, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[1]==4) || (arr[1]==5) || (arr[1]==6) || (arr[1]==7)){
+		button = game.add.button(200, 300, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[1]==8) || (arr[1]==9) || (arr[1]==10) || (arr[1]==11)){
+		button = game.add.button(200, 300, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(200, 300, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 3
+	if((arr[2]==0) || (arr[2]==1) || (arr[2]==2) || (arr[2]==3)){
+	    button = game.add.button(200, 400, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[2]==4) || (arr[2]==5) || (arr[2]==6) || (arr[2]==7)){
+		button = game.add.button(200, 400, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[2]==8) || (arr[2]==9) || (arr[2]==10) || (arr[2]==11)){
+		button = game.add.button(200, 400, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(200, 400, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+		
+	//block 4
+	if((arr[3]==0) || (arr[3]==1) || (arr[3]==2) || (arr[3]==3)){
+	    button = game.add.button(200, 500, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[3]==4) || (arr[3]==5) || (arr[3]==6) || (arr[3]==7)){
+		button = game.add.button(200, 500, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[3]==8) || (arr[3]==9) || (arr[3]==10) || (arr[3]==11)){
+		button = game.add.button(200, 500, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(200, 500, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 5
+    if((arr[4]==0) || (arr[4]==1) || (arr[4]==2) || (arr[4]==3)){
+	    button = game.add.button(300, 200, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[4]==4) || (arr[4]==5) || (arr[4]==6) || (arr[4]==7)){
+		button = game.add.button(300, 200, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[4]==8) || (arr[4]==9) || (arr[4]==10) || (arr[4]==11)){
+		button = game.add.button(300, 200, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(300, 200, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 6
+	if((arr[5]==0) || (arr[5]==1) || (arr[5]==2) || (arr[5]==3)){
+	    button = game.add.button(300, 300, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[5]==4) || (arr[5]==5) || (arr[5]==6) || (arr[5]==7)){
+		button = game.add.button(300, 300, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[5]==8) || (arr[5]==9) || (arr[5]==10) || (arr[5]==11)){
+		button = game.add.button(300, 300, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(300, 300, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+
+	//block 7
+	if((arr[6]==0) || (arr[6]==1) || (arr[6]==2) || (arr[6]==3)){
+	    button = game.add.button(300, 400, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[6]==4) || (arr[6]==5) || (arr[6]==6) || (arr[6]==7)){
+		button = game.add.button(300, 400, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[6]==8) || (arr[6]==9) || (arr[6]==10) || (arr[6]==11)){
+		button = game.add.button(300, 400, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(300, 400, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+    
+	//block 8
+	if((arr[7]==0) || (arr[7]==1) || (arr[7]==2) || (arr[7]==3)){
+	    button = game.add.button(300, 500, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[7]==4) || (arr[7]==5) || (arr[7]==6) || (arr[7]==7)){
+		button = game.add.button(300, 500, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[7]==8) || (arr[7]==9) || (arr[7]==10) || (arr[7]==11)){
+		button = game.add.button(300, 500, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(300, 500, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 9
+	if((arr[8]==0) || (arr[8]==1) || (arr[8]==2) || (arr[8]==3)){
+	    button = game.add.button(400, 200, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[8]==4) || (arr[8]==5) || (arr[8]==6) || (arr[8]==7)){
+		button = game.add.button(400, 200, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[8]==8) || (arr[8]==9) || (arr[8]==10) || (arr[8]==11)){
+		button = game.add.button(400, 200, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(400, 200, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+		
+	//block 10
+    if((arr[9]==0) || (arr[9]==1) || (arr[9]==2) || (arr[9]==3)){
+	    button = game.add.button(400, 300, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[9]==4) || (arr[9]==5) || (arr[9]==6) || (arr[9]==7)){
+		button = game.add.button(400, 300, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[9]==8) || (arr[9]==9) || (arr[9]==10) || (arr[9]==11)){
+		button = game.add.button(400, 300, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(400, 300, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }	
+		
+    //block 11
+	if((arr[10]==0) || (arr[10]==1) || (arr[10]==2) || (arr[10]==3)){
+	    button = game.add.button(400, 400, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[10]==4) || (arr[10]==5) || (arr[10]==6) || (arr[10]==7)){
+		button = game.add.button(400, 400, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[10]==8) || (arr[10]==9) || (arr[10]==10) || (arr[10]==11)){
+		button = game.add.button(400, 400, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(400, 400, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 12
+	if((arr[11]==0) || (arr[11]==1) || (arr[11]==2) || (arr[11]==3)){
+	    button = game.add.button(400, 500, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[11]==4) || (arr[11]==5) || (arr[11]==6) || (arr[11]==7)){
+		button = game.add.button(400, 500, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[11]==8) || (arr[11]==9) || (arr[11]==10) || (arr[11]==11)){
+		button = game.add.button(400, 500, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(400, 500, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 13
+	if((arr[12]==0) || (arr[12]==1) || (arr[12]==2) || (arr[12]==3)){
+	    button = game.add.button(500, 200, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[12]==4) || (arr[12]==5) || (arr[12]==6) || (arr[12]==7)){
+		button = game.add.button(500, 200, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[12]==8) || (arr[12]==9) || (arr[12]==10) || (arr[12]==11)){
+		button = game.add.button(500, 200, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(500, 200, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 14
+	if((arr[13]==0) || (arr[13]==1) || (arr[13]==2) || (arr[13]==3)){
+	    button = game.add.button(500, 300, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[13]==4) || (arr[13]==5) || (arr[13]==6) || (arr[13]==7)){
+		button = game.add.button(500, 300, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[13]==8) || (arr[13]==9) || (arr[13]==10) || (arr[13]==11)){
+		button = game.add.button(500, 300, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(500, 300, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 15
+	if((arr[14]==0) || (arr[14]==1) || (arr[14]==2) || (arr[14]==3)){
+	    button = game.add.button(500, 400, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[14]==4) || (arr[14]==5) || (arr[14]==6) || (arr[14]==7)){
+		button = game.add.button(500, 400, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[14]==8) || (arr[14]==9) || (arr[14]==10) || (arr[14]==11)){
+		button = game.add.button(500, 400, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(500, 400, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	//block 16
+	if((arr[15]==0) || (arr[15]==1) || (arr[15]==2) || (arr[15]==3)){
+	    button = game.add.button(500, 500, 'sp1', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";   
+		//passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[15]==4) || (arr[15]==5) || (arr[15]==6) || (arr[15]==7)){
+		button = game.add.button(500, 500, 'sp2', actionOnClick, this, 1,0,2);
+		button.variable= "b2";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else if((arr[15]==8) || (arr[15]==9) || (arr[15]==10) || (arr[15]==11)){
+		button = game.add.button(500, 500, 'sp3', actionOnClick, this, 1,0,2);
+		button.variable= "b3";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	else{
+		button = game.add.button(500, 500, 'sp4', actionOnClick, this, 1,0,2);
+		button.variable= "b4";
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+		button.scale.setTo(2.0, 2.0);
+	    }
+	
+	text= game.add.text(10, 10, '', {fill:'#ffffff'});
+	text.text= "Score: " + score; 
+	
+	timerDisp= game.add.text(590, 10, '', {fill:'#ffffff'});
+	timerDisp.text= "Time left: " + sec;
+}
+
+function update() {
+}
+
+function actionOnClick(b1){
+    b1.setFrames(2);
+	count++;
+	if(count== "1"){  
+	    c= b1;
+	    a= b1.variable;  	
+	}
+	else{
+	    b= b1.variable;
+		if(a==b){
+			score+= 10;
+			if(score== 80){
+		        alert("You won!!! Play again?");
+		    }
+		}
+		else{
+	    c.setFrames(1, 0, 2);
+		b1.setFrames(1, 0, 2); 
+		}  
+		text.text= "Score: " + score; 
+		count=0;
+    }
+}	
+</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+<meta charset="UTF-8" />
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/8CB3DA09-D431-E541-9ED3-DACEBA92BFF8/main.js" charset="UTF-8"></script><script>
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+var arr= [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+arr= shuffle(arr);
+console.log(arr);
+</script>
+</head>
+<body></body>
+</html>

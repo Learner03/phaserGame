@@ -1,0 +1,110 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Phaser - Making your first game, part 1</title>
+	<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/8CB3DA09-D431-E541-9ED3-DACEBA92BFF8/main.js" charset="UTF-8"></script><script type="text/javascript" src="phaser.min.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;                                
+        }
+    </style>                           <!--code won't run correctly because button.variable= "b1" -->
+</head>                                <!-- so all pairs will match because of having the same id -->
+<body>
+
+<script type="text/javascript">
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+
+var text, x, y;
+var button, levelData;
+var count= 0, score= 0;
+var a,b,c;
+var timer, timeDisp;
+var sec= 10;
+var restart= 0;
+var demo;
+
+function preload() {
+    game.load.image('star', 'assets/star.png');              //loading image
+	game.load.spritesheet('sp', 'assets/sprite.png', 32, 32);//loading spritesheet
+	game.load.json('level', 'assets/gameLevels.json');
+}
+
+function timer(){
+	timer = game.time.create(false);              //game.time.events.add(Phaser.Timer.SECOND * 100, stopTimer, this);
+    timer.loop(1000, updateCounter, this);        //Set a TimerEvent to occur after each second
+	timer.start();
+}
+
+function create() {
+    timer();
+	
+	text= game.add.text(250, 16, '', {fill:'#ffffff'});
+	text.text= "Score: " + score; 
+	
+	timerDisp= game.add.text(450, 16, '', {fill:'#ffffff'});
+	timerDisp.text= "Time left: 10";
+	
+	levelData= game.cache.getJSON('level');
+	
+/*	while(demo in levelData.platformData){
+		button= game.add.button(demo.x, demo.y, 'sp', actionOnClick, this, 1,0,2);
+		button.variable= "b1";          //passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+	} */ 
+
+/*	levelData.platformData.foreach(function(element){
+		button= game.add.button(element.x, element.y, 'sp', actionOnClick, this, 1,0,2);
+		//actionOnClick function on click and frames order over, out, down, up
+		button.variable= "b1";          //passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+	}, this); */
+	
+	for(var i=0; i<9; i++){
+	    x= levelData.platformData[i].x;
+		y= levelData.platformData[i].y;
+		button= game.add.button(x, y, 'sp', actionOnClick, this, 1,0,2);
+		button.variable= "b1";          //passing value
+		button.anchor.setTo(0.5, 0.5);  //setting the anchor to the center
+	}
+
+}
+
+function updateCounter(){
+    sec--;
+    timerDisp.text= "Time left: " + sec;
+	if(sec== "0"){
+	    alert("Time's up!!!");
+		location.reload(this);
+	}
+}
+
+function update() {
+}
+
+function actionOnClick(b1){
+    b1.setFrames(2);
+	count++;
+	if(count== "1"){  
+	    c= b1;
+	    a= b1.variable;  	
+	}
+	else{
+	    b= b1.variable;
+		if(a==b)
+		{
+		score+= 10;
+		}
+		else{
+	    c.setFrames(1, 0, 2);
+		b1.setFrames(1, 0, 2); 
+		}  
+		text.text= "Score: " + score; 
+		count=0;
+    }
+}	
+</script>
+
+</body>
+</html>
